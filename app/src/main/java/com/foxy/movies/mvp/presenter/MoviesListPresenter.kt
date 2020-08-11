@@ -30,8 +30,14 @@ class MoviesListPresenter : MvpPresenter<MoviesListView>() {
         viewState.openMovieDetails(movie.id)
     }
 
-    fun filterByGenre(genre: String) {
-        // TODO: show movies by genre
+    fun filterByGenre(genreFilter: String) {
+        val filteredMovies = mutableListOf<Movie>()
+        for (movie in movies) {
+            for (genre in movie.genres) {
+                if (genre == genreFilter) filteredMovies.add(movie)
+            }
+        }
+        viewState.updateView(genres, filteredMovies)
     }
 
     private fun getGenres(movies: List<Movie>) : List<String>  {
