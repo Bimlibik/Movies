@@ -19,7 +19,7 @@ fun saveMovieToPrefs(movie: Movie) {
         .apply()
 }
 
-fun loadMovie(): Movie {
+fun loadMovieFromPrefs(): Movie {
     val json = prefs.getString(MOVIE, MOVIE_DEFAULT)!!
     if (json == MOVIE_DEFAULT) {
 
