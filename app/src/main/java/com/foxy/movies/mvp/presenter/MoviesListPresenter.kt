@@ -7,6 +7,7 @@ import com.foxy.movies.data.MovieApiInterface
 import com.foxy.movies.data.MovieResponse
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.utils.SortMovies
+import com.foxy.movies.utils.saveMovieToPrefs
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import retrofit2.Call
@@ -24,8 +25,9 @@ class MoviesListPresenter : MvpPresenter<MoviesListView>() {
         loadMovies()
     }
 
-    fun showDetails(id: Int) {
-        viewState.openMovieDetails(id)
+    fun showDetails(movie: Movie) {
+        saveMovieToPrefs(movie)
+        viewState.openMovieDetails(movie.id)
     }
 
     fun filterByGenre(genre: String) {
