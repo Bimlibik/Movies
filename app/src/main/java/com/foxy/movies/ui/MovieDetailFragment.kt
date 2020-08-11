@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.foxy.movies.R
 import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.presenter.MovieDetailPresenter
@@ -25,9 +26,11 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
     }
 
     override fun onMovieLoaded(movie: Movie) {
+        toolbar.title = movie.localizedName
         tv_movie_name.text = movie.name
         tv_year.text = resources.getString(R.string.format_movie_year, movie.year)
         tv_rating_value.text = movie.rating
@@ -49,6 +52,13 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
 
     override fun openMoviesList() {
         TODO("TODO")
+    }
+
+    private fun setupToolbar() {
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        }
+        toolbar.title = getString(R.string.movie_details)
     }
 
 }
