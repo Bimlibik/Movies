@@ -138,7 +138,7 @@ class MoviesAdapter(genres: List<String>, movies: List<Movie>, val presenter: Mo
                 .placeholder(R.drawable.ic_error)
                 .into(image)
 
-            itemView.setOnClickListener { presenter.showDetails(movies[i].id) }
+            itemView.setOnClickListener { presenter.showDetails(movies[i]) }
         }
     }
 
