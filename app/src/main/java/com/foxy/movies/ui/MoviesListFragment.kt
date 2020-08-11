@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.foxy.movies.R
+import com.foxy.movies.data.GenreWrapper
 import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.ui.adapters.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies_list.*
-import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -33,7 +36,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupToolbar()
+        setupToolbar(view)
 
         moviesAdapter = MoviesAdapter(ArrayList(0), ArrayList(0), presenter)
 
@@ -53,7 +56,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         }
     }
 
-    override fun onMoviesLoaded(genres: List<String>, movies: List<Movie>) {
+    override fun onMoviesLoaded(genres: List<GenreWrapper>, movies: List<Movie>) {
         moviesAdapter.genres = genres
         moviesAdapter.movies = movies
         tv_empty_info.visibility = View.GONE
@@ -65,7 +68,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         recycler_movies.visibility = View.GONE
     }
 
-    override fun updateView(genres: List<String>, movies: List<Movie>) {
+    override fun updateView(genres: List<GenreWrapper>, movies: List<Movie>) {
         moviesAdapter.genres = genres
         moviesAdapter.movies = movies
     }
@@ -75,10 +78,14 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         findNavController().navigate(action)
     }
 
-    private fun setupToolbar() {
-        if (activity is AppCompatActivity) {
-            (activity as AppCompatActivity).setSupportActionBar(toolbar)
-        }
+    private fun setupToolbar(view: View) {
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        val appBarConfig = AppBarConfiguration(setOf(R.id.movies_list))
+        val navHost = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHost, appBarConfig)
         toolbar.title = getString(R.string.app_name)
+
     }
+
+
 }

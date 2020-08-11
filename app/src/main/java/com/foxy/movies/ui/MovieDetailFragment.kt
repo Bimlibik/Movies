@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.addCallback
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.foxy.movies.R
 import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.presenter.MovieDetailPresenter
 import com.foxy.movies.mvp.view.MovieDetailView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -22,15 +25,18 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    ): View? {
+        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
+        setupToolbar(view)
+        onBackPressed()
     }
 
     override fun onMovieLoaded(movie: Movie) {
-        toolbar.title = movie.localizedName
+        (activity as MainActivity).supportActionBar?.title = movie.localizedName
         tv_movie_name.text = movie.name
         tv_year.text = resources.getString(R.string.format_movie_year, movie.year)
         tv_rating_value.text = movie.rating
@@ -51,14 +57,21 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
     }
 
     override fun openMoviesList() {
-        TODO("TODO")
+        val action = MoviesListFragmentDirections.actionHome()
+        findNavController().navigate(action)
     }
 
-    private fun setupToolbar() {
-        if (activity is AppCompatActivity) {
-            (activity as AppCompatActivity).setSupportActionBar(toolbar)
+    private fun setupToolbar(view: View) {
+        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+        val navHost = NavHostFragment.findNavController(this)
+        NavigationUI.setupWithNavController(toolbar, navHost)
+        toolbar.title = getString(R.string.app_name)
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            presenter.goBack()
         }
-        toolbar.title = getString(R.string.movie_details)
     }
 
 }
