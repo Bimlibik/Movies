@@ -16,6 +16,10 @@ class MovieDetailPresenter : MvpPresenter<MovieDetailView>() {
         loadMovie()
     }
 
+    fun goBack() {
+        viewState.openMoviesList()
+    }
+
     private fun loadMovie() {
         movie = loadMovieFromPrefs()
         viewState.onMovieLoaded(movie)
