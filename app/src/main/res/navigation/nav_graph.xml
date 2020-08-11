@@ -4,6 +4,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/movies_list">
 
+    <action
+        android:id="@+id/action_home"
+        app:destination="@id/movies_list" />
+
     <fragment
         android:id="@+id/movies_list"
         android:name="com.foxy.movies.ui.MoviesListFragment"
