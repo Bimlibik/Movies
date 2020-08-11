@@ -3,4 +3,5 @@
     <string name="empty_text">No movies found</string>
     <string name="tv_genres">Genres</string>
     <string name="tv_movies">Movies</string>
+    <string name="format_movie_year">Year: %s</string>
 </resources>

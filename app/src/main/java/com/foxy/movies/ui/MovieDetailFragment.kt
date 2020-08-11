@@ -8,6 +8,9 @@ import com.foxy.movies.R
 import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.presenter.MovieDetailPresenter
 import com.foxy.movies.mvp.view.MovieDetailView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -25,11 +28,23 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
     }
 
     override fun onMovieLoaded(movie: Movie) {
-        TODO("TODO")
+        tv_movie_name.text = movie.name
+        tv_year.text = resources.getString(R.string.format_movie_year, movie.year)
+        tv_rating_value.text = movie.rating
+        tv_description.text = movie.description
+
+        Picasso.with(requireContext())
+            .load(movie.imgUrl)
+            .placeholder(R.drawable.ic_error)
+            .into(img_movie)
+
+        layout_movie.visibility = View.VISIBLE
+        tv_empty_info.visibility = View.GONE
     }
 
     override fun onMovieNotAvailable() {
-        TODO("TODO")
+        layout_movie.visibility = View.GONE
+        tv_empty_info.visibility = View.VISIBLE
     }
 
     override fun openMoviesList() {
