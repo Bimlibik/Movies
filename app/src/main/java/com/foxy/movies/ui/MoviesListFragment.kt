@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
@@ -13,6 +14,7 @@ import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.ui.adapters.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -30,6 +32,8 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupToolbar()
 
         moviesAdapter = MoviesAdapter(ArrayList(0), ArrayList(0), presenter)
 
@@ -69,5 +73,12 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
     override fun openMovieDetails(id: Int) {
         val action = MoviesListFragmentDirections.actionMoviesListToMovieDetail(id)
         findNavController().navigate(action)
+    }
+
+    private fun setupToolbar() {
+        if (activity is AppCompatActivity) {
+            (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        }
+        toolbar.title = getString(R.string.app_name)
     }
 }
