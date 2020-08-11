@@ -1,17 +1,20 @@
 package com.foxy.movies.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.foxy.movies.App
 import com.foxy.movies.R
+import com.foxy.movies.data.GenreWrapper
 import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.squareup.picasso.Picasso
 
-class MoviesAdapter(genres: List<String>, movies: List<Movie>, val presenter: MoviesListPresenter) :
+class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val presenter: MoviesListPresenter) :
     RecyclerView.Adapter<MoviesAdapter.GenericViewHolder>() {
 
     var movies: List<Movie> = movies
@@ -20,7 +23,7 @@ class MoviesAdapter(genres: List<String>, movies: List<Movie>, val presenter: Mo
             notifyDataSetChanged()
         }
 
-    var genres: List<String> = genres
+    var genres: List<GenreWrapper> = genres
         set(genres) {
             field = genres
             notifyDataSetChanged()
@@ -64,14 +67,6 @@ class MoviesAdapter(genres: List<String>, movies: List<Movie>, val presenter: Mo
 
     override fun onBindViewHolder(holder: GenericViewHolder, position: Int) {
         holder.bindView(position)
-//        val movie = movies[position]
-//        holder.name.text = movie.localizedName
-//
-//        Picasso.with(holder.itemView.context)
-//            .load(movie.imgUrl)
-//            .into(holder.image)
-//
-//        holder.itemView.setOnClickListener { presenter.showDetails(movie.id) }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -109,7 +104,13 @@ class MoviesAdapter(genres: List<String>, movies: List<Movie>, val presenter: Mo
         val genre: TextView = itemView.findViewById(R.id.tv_genre)
 
         override fun bindView(position: Int) {
-            genre.text = genres[position - 1]
+            genre.text = genres[position - 1].name
+
+            when(genres[position - 1].selected) {
+                true -> genre.setTextColor(App.get().resources.getColor(R.color.colorAccent))
+                else -> genre.setTextColor(App.get().resources.getColor(android.R.color.black))
+            }
+
             itemView.setOnClickListener { presenter.filterByGenre(genres[position - 1]) }
         }
     }
