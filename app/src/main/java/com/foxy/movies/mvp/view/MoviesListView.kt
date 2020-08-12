@@ -17,4 +17,6 @@ interface MoviesListView : MvpView {
 
     fun openMovieDetails(id: Int)
 
+    fun showLoading()
+
 }

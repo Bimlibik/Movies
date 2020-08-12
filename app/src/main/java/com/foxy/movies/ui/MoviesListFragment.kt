@@ -62,12 +62,14 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         moviesAdapter.genres = genres
         moviesAdapter.movies = movies
         tv_empty_info.visibility = View.GONE
+        progress_bar.visibility = View.GONE
         recycler_movies.visibility = View.VISIBLE
     }
 
     override fun onMoviesNotAvailable(emptyText: Int) {
         tv_empty_info.visibility = View.VISIBLE
         recycler_movies.visibility = View.GONE
+        progress_bar.visibility = View.GONE
     }
 
     override fun updateView(genres: List<GenreWrapper>, movies: List<Movie>) {
@@ -78,6 +80,12 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
     override fun openMovieDetails(id: Int) {
         val action = MoviesListFragmentDirections.actionMoviesListToMovieDetail(id)
         findNavController().navigate(action)
+    }
+
+    override fun showLoading() {
+        recycler_movies.visibility = View.GONE
+        tv_empty_info.visibility = View.GONE
+        progress_bar.visibility = View.VISIBLE
     }
 
     private fun setupToolbar(view: View) {

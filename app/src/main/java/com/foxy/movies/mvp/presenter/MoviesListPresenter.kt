@@ -80,6 +80,8 @@ class MoviesListPresenter : MvpPresenter<MoviesListView>() {
     }
 
     private fun loadMovies() {
+        viewState.showLoading()
+
         val apiClient = ApiClient.client.create(MovieApiInterface::class.java)
 
         apiClient.getMovies().enqueue(object : Callback<MovieResponse> {
