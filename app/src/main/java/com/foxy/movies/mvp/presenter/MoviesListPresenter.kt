@@ -24,6 +24,10 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
         loadMovies()
     }
 
+    fun clearCache() {
+        repository.clearCache()
+    }
+
     fun showDetails(movie: Movie) {
         repository.saveMovie(movie)
         viewState.openMovieDetails(movie.id)
@@ -41,6 +45,10 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
         genreFilter.selected = true
         selectedPosition = genreFilter.position
         viewState.updateView(genresWrapper, getFilteredMovies(genreFilter.name))
+    }
+
+    fun reloadMovies() {
+        loadMovies(true)
     }
 
     private fun getFilteredMovies(filter: String): List<Movie> {
@@ -79,10 +87,10 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
         return genres
     }
 
-    private fun loadMovies() {
-        viewState.showLoading()
+    private fun loadMovies(forceUpdate: Boolean = false) {
+        if (!forceUpdate) viewState.showLoading()
 
-        repository.loadMovies(object : LoadMoviesCallback {
+        repository.loadMovies(forceUpdate, object : LoadMoviesCallback {
             override fun onMoviesLoaded(loadedMovies: List<Movie>) {
                 movies.clear()
                 movies.addAll(loadedMovies)

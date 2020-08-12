@@ -2,7 +2,7 @@ package com.foxy.movies.data
 
 interface IMoviesRepository {
 
-    fun loadMovies(callback: LoadMoviesCallback)
+    fun loadMovies(forceUpdate: Boolean, callback: LoadMoviesCallback)
 
     fun saveMovies(movies: List<Movie>)
 

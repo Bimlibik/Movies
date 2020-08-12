@@ -9,7 +9,10 @@ import retrofit2.Response
 
 class MoviesRepository : IMoviesRepository {
 
-    override fun loadMovies(callback: LoadMoviesCallback) {
+    override fun loadMovies(forceUpdate: Boolean, callback: LoadMoviesCallback) {
+        if (forceUpdate) {
+            loadMoviesFromNetwork(callback)
+        }
         checkPrefs(callback)
     }
 

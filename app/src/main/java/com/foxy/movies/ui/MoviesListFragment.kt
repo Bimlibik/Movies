@@ -46,6 +46,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
 
         setupToolbar(view)
         onBackPressed()
+        checkSwipe()
 
         moviesAdapter = MoviesAdapter(ArrayList(0), ArrayList(0), presenter)
 
@@ -95,6 +96,21 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         progress_bar.visibility = View.VISIBLE
     }
 
+    private fun checkSwipe() {
+        swipe.setOnRefreshListener {
+            presenter.reloadMovies()
+            swipe.isRefreshing = false
+
+        }
+
+        swipe.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light
+        )
+    }
+
     private fun setupToolbar(view: View) {
         val toolbar: Toolbar = view.findViewById(R.id.toolbar)
         val appBarConfig = AppBarConfiguration(setOf(R.id.movies_list))
@@ -104,6 +120,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
 
     private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
+            presenter.clearCache()
             activity?.finish()
         }
     }
