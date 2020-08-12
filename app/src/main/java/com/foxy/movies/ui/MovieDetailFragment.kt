@@ -15,6 +15,7 @@ import com.foxy.movies.mvp.presenter.MovieDetailPresenter
 import com.foxy.movies.mvp.view.MovieDetailView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 
@@ -36,7 +37,7 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
     }
 
     override fun onMovieLoaded(movie: Movie) {
-        (activity as MainActivity).supportActionBar?.title = movie.localizedName
+        toolbar.title = movie.localizedName
         tv_movie_name.text = movie.name
         tv_year.text = resources.getString(R.string.format_movie_year, movie.year)
         tv_rating_value.text = movie.rating
@@ -64,7 +65,7 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
     }
 
     private fun setupToolbar(view: View) {
-        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+//        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost)
         toolbar.title = getString(R.string.app_name)
