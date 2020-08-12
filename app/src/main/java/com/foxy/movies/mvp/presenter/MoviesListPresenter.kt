@@ -48,6 +48,7 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
     }
 
     fun reloadMovies() {
+        repository.clearCache()
         loadMovies(true)
     }
 
