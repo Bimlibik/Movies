@@ -28,6 +28,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 android:layout_margin="8dp"
+                android:scrollbars="vertical"
                 android:visibility="gone"/>
 
     </FrameLayout>
