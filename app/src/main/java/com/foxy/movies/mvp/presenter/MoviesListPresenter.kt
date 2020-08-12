@@ -48,7 +48,6 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
     }
 
     fun reloadMovies() {
-        repository.clearCache()
         loadMovies(true)
     }
 
@@ -103,7 +102,12 @@ class MoviesListPresenter(private val repository: IMoviesRepository) :
             }
 
             override fun onMoviesNotAvailable() {
-                viewState.onMoviesNotAvailable(R.string.empty_text)
+                viewState.showErrorMsg(R.string.msg_internet_error)
+                if (movies.isEmpty()) {
+                    viewState.onMoviesNotAvailable(R.string.empty_text)
+                } else {
+                    viewState.onMoviesLoaded(genresWrapper, movies)
+                }
             }
         })
     }

@@ -19,4 +19,6 @@ interface MoviesListView : MvpView {
 
     fun showLoading()
 
+    fun showErrorMsg(msg: Int)
+
 }

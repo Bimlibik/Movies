@@ -19,6 +19,8 @@ import com.foxy.movies.data.MoviesRepository
 import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.ui.adapters.MoviesAdapter
+import com.foxy.movies.utils.showSnackBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
@@ -96,6 +98,10 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         progress_bar.visibility = View.VISIBLE
     }
 
+    override fun showErrorMsg(msg: Int) {
+        view?.showSnackBar(getString(msg), Snackbar.LENGTH_LONG)
+    }
+
     private fun checkSwipe() {
         swipe.setOnRefreshListener {
             presenter.reloadMovies()
@@ -120,7 +126,6 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
 
     private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-            presenter.clearCache()
             activity?.finish()
         }
     }
