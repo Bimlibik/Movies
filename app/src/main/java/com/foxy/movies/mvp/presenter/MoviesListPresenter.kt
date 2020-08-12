@@ -1,18 +1,18 @@
 package com.foxy.movies.mvp.presenter
 
 import com.foxy.movies.R
-import com.foxy.movies.data.*
+import com.foxy.movies.data.GenreWrapper
+import com.foxy.movies.data.IMoviesRepository
+import com.foxy.movies.data.IMoviesRepository.LoadMoviesCallback
+import com.foxy.movies.data.Movie
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.utils.SortMovies
-import com.foxy.movies.utils.saveMovieToPrefs
 import moxy.InjectViewState
 import moxy.MvpPresenter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @InjectViewState
-class MoviesListPresenter : MvpPresenter<MoviesListView>() {
+class MoviesListPresenter(private val repository: IMoviesRepository) :
+    MvpPresenter<MoviesListView>() {
 
     private var movies = mutableListOf<Movie>().apply { emptyList<Movie>() }
     private var genres = mutableListOf<String>().apply { emptyList<String>() }
@@ -25,7 +25,7 @@ class MoviesListPresenter : MvpPresenter<MoviesListView>() {
     }
 
     fun showDetails(movie: Movie) {
-        saveMovieToPrefs(movie)
+        repository.saveMovie(movie)
         viewState.openMovieDetails(movie.id)
     }
 
@@ -82,29 +82,20 @@ class MoviesListPresenter : MvpPresenter<MoviesListView>() {
     private fun loadMovies() {
         viewState.showLoading()
 
-        val apiClient = ApiClient.client.create(MovieApiInterface::class.java)
-
-        apiClient.getMovies().enqueue(object : Callback<MovieResponse> {
-
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                if (response != null && response.isSuccessful) {
-                    response.body()?.let {
-                        movies.clear()
-                        movies.addAll(it.movies)
-                        movies.sortWith(SortMovies.BY_NAME)
-                        genres.clear()
-                        genres.addAll(getGenres(movies))
-                        viewState.onMoviesLoaded(getGenresWrapper(genres), movies)
-                    }
-                } else {
-                    viewState.onMoviesNotAvailable(R.string.empty_text)
-                }
+        repository.loadMovies(object : LoadMoviesCallback {
+            override fun onMoviesLoaded(loadedMovies: List<Movie>) {
+                movies.clear()
+                movies.addAll(loadedMovies)
+                movies.sortWith(SortMovies.BY_NAME)
+                genres.clear()
+                genres.addAll(getGenres(movies))
+                viewState.onMoviesLoaded(getGenresWrapper(genres), movies)
+                repository.saveMovies(movies)
             }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+            override fun onMoviesNotAvailable() {
                 viewState.onMoviesNotAvailable(R.string.empty_text)
             }
-
         })
     }
 

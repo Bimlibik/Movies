@@ -15,18 +15,25 @@ import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.foxy.movies.R
 import com.foxy.movies.data.GenreWrapper
 import com.foxy.movies.data.Movie
+import com.foxy.movies.data.MoviesRepository
 import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.ui.adapters.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 
 class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
 
     @InjectPresenter
     lateinit var presenter: MoviesListPresenter
+
+    @ProvidePresenter
+    fun providePresenter(): MoviesListPresenter {
+        return MoviesListPresenter(MoviesRepository())
+    }
 
     lateinit var moviesAdapter: MoviesAdapter
 

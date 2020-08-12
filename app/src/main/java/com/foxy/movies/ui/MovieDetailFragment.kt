@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.foxy.movies.R
 import com.foxy.movies.data.Movie
+import com.foxy.movies.data.MoviesRepository
 import com.foxy.movies.mvp.presenter.MovieDetailPresenter
 import com.foxy.movies.mvp.view.MovieDetailView
 import com.squareup.picasso.Picasso
@@ -18,11 +19,17 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.toolbar.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
 class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
 
     @InjectPresenter
     lateinit var presenter: MovieDetailPresenter
+
+    @ProvidePresenter
+    fun providePresenter(): MovieDetailPresenter {
+        return MovieDetailPresenter(MoviesRepository())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
