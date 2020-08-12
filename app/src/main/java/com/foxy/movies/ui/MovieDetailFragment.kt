@@ -69,6 +69,7 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost)
         toolbar.title = getString(R.string.app_name)
+        toolbar.setNavigationOnClickListener { presenter.goBack() }
     }
 
     private fun onBackPressed() {

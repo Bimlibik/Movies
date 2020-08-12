@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -37,6 +38,7 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         super.onViewCreated(view, savedInstanceState)
 
         setupToolbar(view)
+        onBackPressed()
 
         moviesAdapter = MoviesAdapter(ArrayList(0), ArrayList(0), presenter)
 
@@ -84,7 +86,12 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost, appBarConfig)
         toolbar.title = getString(R.string.app_name)
+    }
 
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            activity?.finish()
+        }
     }
 
 
