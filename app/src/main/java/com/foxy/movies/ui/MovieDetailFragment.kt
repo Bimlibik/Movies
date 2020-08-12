@@ -45,6 +45,8 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
         Picasso.with(requireContext())
             .load(movie.imgUrl)
             .placeholder(R.drawable.ic_error)
+            .resize(150, 150)
+            .centerCrop()
             .into(img_movie)
 
         layout_movie.visibility = View.VISIBLE

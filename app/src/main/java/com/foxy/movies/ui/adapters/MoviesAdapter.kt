@@ -137,6 +137,8 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
             Picasso.with(itemView.context)
                 .load(movies[i].imgUrl)
                 .placeholder(R.drawable.ic_error)
+                .resize(150, 150)
+                .centerCrop()
                 .into(image)
 
             itemView.setOnClickListener { presenter.showDetails(movies[i]) }
