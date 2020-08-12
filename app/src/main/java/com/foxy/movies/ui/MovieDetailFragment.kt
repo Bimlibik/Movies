@@ -32,12 +32,12 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar(view)
+        setupToolbar()
         onBackPressed()
     }
 
     override fun onMovieLoaded(movie: Movie) {
-        toolbar.title = movie.localizedName
+        toolbar_title.text = movie.localizedName
         tv_movie_name.text = movie.name
         tv_year.text = resources.getString(R.string.format_movie_year, movie.year)
         tv_rating_value.text = movie.rating
@@ -64,11 +64,9 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
         findNavController().navigate(action)
     }
 
-    private fun setupToolbar(view: View) {
-//        val toolbar: Toolbar = view.findViewById(R.id.toolbar)
+    private fun setupToolbar() {
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost)
-        toolbar.title = getString(R.string.app_name)
         toolbar.setNavigationOnClickListener { presenter.goBack() }
     }
 

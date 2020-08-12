@@ -93,7 +93,6 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
         val appBarConfig = AppBarConfiguration(setOf(R.id.movies_list))
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost, appBarConfig)
-        toolbar.title = getString(R.string.app_name)
     }
 
     private fun onBackPressed() {
