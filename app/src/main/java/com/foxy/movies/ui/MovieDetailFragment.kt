@@ -1,11 +1,11 @@
 package com.foxy.movies.ui
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -68,6 +68,7 @@ class MovieDetailFragment : MvpAppCompatFragment(), MovieDetailView {
         val navHost = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHost)
         toolbar.setNavigationOnClickListener { presenter.goBack() }
+        toolbar_title.gravity = Gravity.START
     }
 
     private fun onBackPressed() {
