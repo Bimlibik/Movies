@@ -1,9 +1,9 @@
 package com.foxy.movies.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -101,9 +101,11 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
     }
 
     private inner class GenreHolder(itemView: View) : GenericViewHolder(itemView) {
+        val checkBox: CheckBox = itemView.findViewById(R.id.checkbox)
         val genre: TextView = itemView.findViewById(R.id.tv_genre)
 
         override fun bindView(position: Int) {
+            checkBox.isChecked = genres[position - 1].selected
             genre.text = genres[position - 1].name
 
             when(genres[position - 1].selected) {
@@ -112,6 +114,7 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
             }
 
             itemView.setOnClickListener { presenter.filterByGenre(genres[position - 1]) }
+            checkBox.setOnClickListener { presenter.filterByGenre(genres[position - 1]) }
         }
     }
 
