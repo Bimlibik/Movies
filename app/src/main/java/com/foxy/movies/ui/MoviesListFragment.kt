@@ -20,7 +20,6 @@ import com.foxy.movies.mvp.presenter.MoviesListPresenter
 import com.foxy.movies.mvp.view.MoviesListView
 import com.foxy.movies.ui.adapters.MoviesAdapter
 import com.foxy.movies.utils.showSnackBar
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter

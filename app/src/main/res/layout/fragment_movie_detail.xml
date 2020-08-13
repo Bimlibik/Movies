@@ -44,7 +44,8 @@
                         android:layout_height="150dp"
                         android:layout_marginRight="8dp"
                         android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_error" />
+                        android:src="@drawable/ic_error"
+                        android:contentDescription="@string/content_description_movie_poster"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -55,7 +56,7 @@
                             android:id="@+id/tv_movie_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Movie name"
+                            android:text="@string/tv_movie_name"
                             android:textSize="20sp"
                             android:layout_marginBottom="8dp" />
 
@@ -63,7 +64,7 @@
                             android:id="@+id/tv_year"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Movie year"
+                            android:text="@string/tv_movie_year"
                             android:layout_marginBottom="8dp"
                             android:textSize="20sp" />
 
@@ -76,7 +77,7 @@
                                 android:id="@+id/tv_rating_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Rating:"
+                                android:text="@string/tv_rating"
                                 android:textSize="20sp"
                                 android:layout_marginRight="4dp"
                                 android:layout_marginEnd="4dp" />
@@ -97,7 +98,7 @@
                     android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Movie description"
+                    android:text="@string/tv_movie_description"
                     android:textSize="15sp"
                     android:layout_margin="8dp" />
             </LinearLayout>

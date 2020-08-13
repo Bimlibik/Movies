@@ -7,4 +7,9 @@
     <string name="movie_details">Movie details</string>
     <string name="msg_internet_error">Loading movies list failed. Please, check your internet connection</string>
     <string name="snackbar_action_ok">OK</string>
+    <string name="content_description_movie_poster">Movie poster</string>
+    <string name="tv_movie_name">Movie name</string>
+    <string name="tv_movie_year">Movie year</string>
+    <string name="tv_rating">Rating:</string>
+    <string name="tv_movie_description">Movie description</string>
 </resources>

@@ -9,7 +9,8 @@
     <ImageView
         android:id="@+id/img_movie"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:contentDescription="@string/content_description_movie_poster"/>
 
     <TextView
         android:id="@+id/tv_movie_name"
@@ -21,7 +22,7 @@
         android:background="#66FFFFFF"
         android:maxLines="2"
         android:ellipsize="end"
-        android:text="Movie name"
+        android:text="@string/tv_movie_name"
         android:textColor="@color/colorBlack"
         android:textStyle="bold"/>
 

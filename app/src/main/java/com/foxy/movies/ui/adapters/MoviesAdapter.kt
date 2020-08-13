@@ -84,7 +84,7 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
             return if (position == 0) HEADER_MOVIES_VIEW
             else ITEM_MOVIE_VIEW
         }
-        return super.getItemViewType(position);
+        return super.getItemViewType(position)
     }
 
     abstract class GenericViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -96,7 +96,7 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
         val title: TextView = itemView.findViewById(R.id.tv_header)
 
         override fun bindView(position: Int) {
-            title.text = "Genres"
+            title.text = App.get().resources.getString(R.string.tv_genres)
         }
     }
 
@@ -122,7 +122,7 @@ class MoviesAdapter(genres: List<GenreWrapper>, movies: List<Movie>, val present
         val title: TextView = itemView.findViewById(R.id.tv_header)
 
         override fun bindView(position: Int) {
-            title.text = "Movies"
+            title.text = App.get().resources.getString(R.string.tv_movies)
         }
     }
 
