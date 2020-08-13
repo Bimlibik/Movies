@@ -99,7 +99,10 @@ class MoviesListFragment : MvpAppCompatFragment(), MoviesListView {
     }
 
     override fun showErrorMsg(msg: Int) {
-        view?.showSnackBar(getString(msg), Snackbar.LENGTH_LONG)
+        view?.showSnackBar(
+            getString(msg),
+            getString(R.string.snackbar_action_ok),
+        View.OnClickListener {  })
     }
 
     private fun checkSwipe() {
